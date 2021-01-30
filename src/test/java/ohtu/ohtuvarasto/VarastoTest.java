@@ -64,5 +64,71 @@ public class VarastoTest {
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
+    
+    @Test
+    public void negativeConstructorValueSetsTilavuusToZero() {
+        varasto = new Varasto(-10);
+        
+        assertEquals(0.0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+    @Test
+    public void doubleVariableConstructureSetsCorrectVariables() {
+        varasto = new Varasto(10, 1);
+        assertEquals(10.0, varasto.getTilavuus(), vertailuTarkkuus);
+        assertEquals(1, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void doubleVariableConstructureSetTilavuusToZeroWhenNegative() {
+        varasto = new Varasto(-10, 0);
+        
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+        
+    }
+    
+    @Test
+    public void doubleVariableConstructureSetSaldoToZeroWhenNegative() {
+        varasto = new Varasto(10, -10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void doubleVariableConstructureSaldoIsLargerThanTilavuus() {
+        varasto = new Varasto(5, 10);
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void addNegativeMaaraToVarasto() {
+        varasto.lisaaVarastoon(-10);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void addTooMuchToVarasto() {
+        varasto.lisaaVarastoon(20);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void removeNegativeFromVarasto() {
+        varasto.otaVarastosta(-10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void removeTooMuchFromVarasto() {
+        varasto.lisaaVarastoon(10);
+        varasto.otaVarastosta(12);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void toStringTest() {
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", varasto.toString());
+    }
+            
+    
 
 }
